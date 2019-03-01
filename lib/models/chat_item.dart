@@ -27,10 +27,13 @@ class ChatItem {
 
 
   factory ChatItem.fromJson(Map<String,dynamic> json){
-    print(DateTime.fromMicrosecondsSinceEpoch(json["date"].seconds));
+    int seconds = 0;
+    if(json["date"]!=null){
+      seconds = json["date"].seconds;
+    }
     return ChatItem(
       message : json["message"] ?? "" ,
-      date: DateTime.fromMicrosecondsSinceEpoch(json["date"].seconds),
+      date: DateTime.fromMicrosecondsSinceEpoch(seconds),
       name: json["name"] ?? "",
       avatarUrl: json["avatarUrl"] ?? "",
     );

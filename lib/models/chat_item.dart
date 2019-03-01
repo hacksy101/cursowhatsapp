@@ -1,3 +1,5 @@
+import 'package:whatsapp/models/user.dart';
+
 class ChatItem {
   final String avatarUrl;
   final String name;
@@ -5,12 +7,14 @@ class ChatItem {
   final DateTime date;
   final int unreadMessages;
   final CheckStatus checked;
+  final User owner;
   ChatItem({
     this.avatarUrl,
     this.name,
     this.message,
     this.date,
     this.unreadMessages = 0,
+    this.owner,
     this.checked=CheckStatus.uncheck,
   });
 
@@ -20,6 +24,17 @@ class ChatItem {
 
   int get unreadMessageCount => unreadMessages>99?99:unreadMessages;
   bool get haveUnreadMessage => unreadMessages!=0 ;
+
+
+  factory ChatItem.fromJson(Map<String,dynamic> json){
+    print(DateTime.fromMicrosecondsSinceEpoch(json["date"].seconds));
+    return ChatItem(
+      message : json["message"] ?? "" ,
+      date: DateTime.fromMicrosecondsSinceEpoch(json["date"].seconds),
+      name: json["name"] ?? "",
+      avatarUrl: json["avatarUrl"] ?? "",
+    );
+  }
 }
 
 

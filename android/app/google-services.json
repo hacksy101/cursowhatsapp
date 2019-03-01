@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "586590868195",
+    "firebase_url": "https://whatsapp-ce25c.firebaseio.com",
+    "project_id": "whatsapp-ce25c",
+    "storage_bucket": "whatsapp-ce25c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586590868195:android:35ae15daa29d3e5e",
+        "android_client_info": {
+          "package_name": "io.hacksy.whatsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586590868195-fh7h0dnrp6h2fug4d6dvvbgr9lq2dg10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRNtcHXEjWjcERTA-8j6Z1iKkaZ8EpCys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

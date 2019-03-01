@@ -4,11 +4,13 @@ import 'package:whatsapp/screens/widgets/check_widget.dart';
 
 class ChatItemWidget extends StatelessWidget {
   final ChatItem chatItem;
-  ChatItemWidget({@required this.chatItem}) : assert(chatItem != null);
+  final VoidCallback onTap;
+  ChatItemWidget({@required this.chatItem,this.onTap}) : assert(chatItem != null);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: CircleAvatar(
         backgroundImage: NetworkImage(chatItem.avatarUrl),
       ),

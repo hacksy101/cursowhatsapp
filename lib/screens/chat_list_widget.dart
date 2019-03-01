@@ -1,46 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp/models/chat_item.dart';
-import 'package:whatsapp/screens/chat_item_widget.dart';
+import 'package:whatsapp/screens/widgets/chat_item_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp/screens/chat_user_widget.dart';
 
 class ChatListWidget extends StatelessWidget {
+
+  void goToChatUser(BuildContext context,Map<String, dynamic> data){
+
+    List<ChatItem> chatItems= List<ChatItem>();
+    chatItems.add(ChatItem.fromJson(data));
+    chatItems.add(ChatItem.fromJson(data));
+    chatItems.add(ChatItem.fromJson(data));
+
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChatUserWidget(chatItems:chatItems)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: chatItems.length,
-      itemBuilder: (BuildContext context, int position) {
-        return Column(
-          children: <Widget>[
-            ChatItemWidget(chatItem: chatItems[position],),
-            Divider(height:10.0),
-          ],
-        );
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection("messages").snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Error cargando mensajes");
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(child: CircularProgressIndicator());
+            break;
+          default:
+            return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int position) {
+                return Column(
+                  children: <Widget>[
+                    ChatItemWidget(
+                      onTap: () {
+                       goToChatUser(context, snapshot.data.documents[position].data);
+                      },
+                      chatItem: ChatItem.fromJson(
+                          snapshot.data.documents[position].data),
+                    ),
+                    Divider(height: 10.0),
+                  ],
+                );
+              },
+            );
+            break;
+        }
       },
     );
   }
 }
-
-
-List<ChatItem> chatItems=[
-  ChatItem(
-    avatarUrl: "https://whatsappbrand.com/wp-content/themes/whatsapp-brc/images/chat-thumb-android-1.png",
-    name: "Miguel Gil Rosas",
-    message: "el perro del vecino de Álvaro se mudó a casa de Hansy jaja",
-    date: DateTime.parse("2019-27-02 18:27"),
-    unreadMessages: 5,
-      checked: CheckStatus.check,
-  ),
-  ChatItem(
-    avatarUrl: "https://grokonez.com/wp-content/uploads/2018/07/flutter-firebase-firestore-example-crud-listview-firebase-console-result.png",
-    name: "Miguel Gil Rosas",
-    message: "el perro del vecino de Álvaro se mudó a casa de Hansy jaja",
-    date: DateTime.parse("2019-27-02 18:27"),
-    unreadMessages: 92,
-    checked: CheckStatus.doublegreencheck,
-  ),
-  ChatItem(
-    avatarUrl: "https://grokonez.com/wp-content/uploads/2018/07/flutter-firebase-firestore-example-crud-listview-firebase-console-result.png",
-    name: "francescoly perez ttito",
-    message: "gracias. XD",
-    date: DateTime.parse("2019-27-02 18:27"),
-  ),
-];

@@ -13,7 +13,7 @@ class CheckWidget extends StatelessWidget {
       case CheckStatus.check:
         return Icon(Icons.check, size: 15.0,);
         break;
-      case CheckStatus.doublegreencheck:
+      case CheckStatus.doublecheckblue:
         return Icon(
           Icons.done_all,
           color: Colors.blueAccent,
